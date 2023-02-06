@@ -1842,7 +1842,7 @@ private:
 	std::vector<generic_string> _fontlist;
 	std::vector<generic_string> _blacklist;
 
-	bool _isLocal = false;
+	bool _isLocal = true;
 	bool _isx64 = false; // by default 32-bit
 	bool _isCloud = false;
 

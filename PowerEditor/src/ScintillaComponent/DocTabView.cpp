@@ -36,11 +36,18 @@ void DocTabView::addBuffer(BufferID buffer)
 	TCITEM tie;
 	tie.mask = TCIF_TEXT | TCIF_IMAGE | TCIF_PARAM;
 
+	std::wstring fileName = buf->getFileName();
+	if(fileName.ends_with(L".notes"))
+		fileName = fileName.substr(0, (fileName.length()-6));
+	TCHAR *fileNameD = new TCHAR[fileName.length()+1];
+	lstrcpy(fileNameD, fileName.data());
+
 	int index = -1;
 	if (_hasImgLst)
 		index = 0;
 	tie.iImage = index;
-	tie.pszText = const_cast<TCHAR *>(buf->getFileName());
+	//tie.pszText = const_cast<TCHAR *>(buf->getFileName());
+	tie.pszText = fileNameD;
 	tie.lParam = reinterpret_cast<LPARAM>(buffer);
 	::SendMessage(_hSelf, TCM_INSERTITEM, _nbItem++, reinterpret_cast<LPARAM>(&tie));
 	bufferUpdated(buf, BufferChangeMask);
@@ -165,7 +172,12 @@ void DocTabView::bufferUpdated(Buffer * buffer, int mask)
 		tie.pszText = const_cast<TCHAR *>(encodedLabel);
 
 		{
-			const TCHAR* in = buffer->getFileName();
+			std::wstring fileName = buffer->getFileName();
+			if(fileName.ends_with(L".notes"))
+				fileName = fileName.substr(0, (fileName.length()-6));
+			
+			//const TCHAR* in = buffer->getFileName();
+			const TCHAR* in = fileName.data();
 			TCHAR* out = encodedLabel;
 
 			//This code will read in one character at a time and duplicate every first ampersand(&).

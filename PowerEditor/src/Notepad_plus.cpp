@@ -3752,7 +3752,12 @@ void Notepad_plus::setTitle()
 
 	if (nppGUI._shortTitlebar)
 	{
-		result += buf->getFileName();
+		//result += buf->getFileName();
+		std::wstring fileName = buf->getFileName();
+		if(fileName.ends_with(L".notes"))
+			fileName = fileName.substr(0, (fileName.length()-6));
+
+		result += fileName;
 	}
 	else
 	{

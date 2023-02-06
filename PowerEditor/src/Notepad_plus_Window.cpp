@@ -19,7 +19,7 @@
 #include <shlwapi.h>
 #include "Notepad_plus_Window.h"
 
-const TCHAR Notepad_plus_Window::_className[32] = TEXT("Notepad++");
+const TCHAR Notepad_plus_Window::_className[32] = TEXT("SimpleNotes");
 HWND Notepad_plus_Window::gNppHWND = NULL;
 
 
